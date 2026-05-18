@@ -1,0 +1,64 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "oxfordledge-edgar"
+version = "0.1.0"
+description = "Battle-tested SEC EDGAR Form 4 (insider transaction) and 13F (institutional holding) parsers, MIT-licensed. Extracted from the production parser at oxfordledge.com (238K+ Form 4 transactions parsed with 0 failures)."
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+    {name = "Oxford Ledge LLC"},
+]
+maintainers = [
+    {name = "Oxford Ledge LLC"},
+]
+keywords = [
+    "sec", "edgar", "form4", "13f", "insider-trading",
+    "institutional-holdings", "filings", "finance", "compliance",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Financial and Insurance Industry",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Office/Business :: Financial",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+requires-python = ">=3.10"
+# Stdlib-only by design — no requests / httpx / lxml. urllib + xml.etree
+# are the entire HTTP + parser stack. This keeps the install footprint
+# trivial (no transitive deps) and the surface auditable for security-
+# conscious users.
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7",
+    "pytest-cov>=4",
+]
+
+[project.urls]
+Homepage = "https://www.oxfordledge.com"
+Documentation = "https://github.com/hs902/oxford-ledge-edgar#readme"
+Repository = "https://github.com/hs902/oxford-ledge-edgar"
+Issues = "https://github.com/hs902/oxford-ledge-edgar/issues"
+
+[project.scripts]
+# CLI helpers exposed once the package matures past v0.x. v0.1.0 is
+# library-only.
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["oxfordledge_edgar*"]
+exclude = ["tests*", "fixtures*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
