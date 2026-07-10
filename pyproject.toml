@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "oxfordledge-edgar"
-version = "0.1.0"
+version = "0.2.0"
 description = "Battle-tested SEC EDGAR Form 4 (insider transaction) and 13F (institutional holding) parsers, MIT-licensed. Extracted from the production parser at oxfordledge.com (238K+ Form 4 transactions parsed with 0 failures)."
 readme = "README.md"
 license = {file = "LICENSE"}

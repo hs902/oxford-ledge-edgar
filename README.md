@@ -97,7 +97,7 @@ class Holding:
     cusip: Optional[str]
     issuer_name: Optional[str]
     title_of_class: Optional[str]
-    value_usd: Optional[int]            # already in dollars (not thousands)
+    value_usd: Optional[int]            # normalized to dollars (see note below)
     shares_or_units: Optional[int]
     sh_or_prn: Optional[str]            # "SH" (shares) | "PRN" (principal)
     put_or_call: Optional[str]          # for derivatives
@@ -106,6 +106,18 @@ class Holding:
     voting_authority_shared: Optional[int]
     voting_authority_none: Optional[int]
 ```
+
+**Value units (v0.2 breaking change):** the raw 13F `<value>` unit
+varies by filer — the pre-2023 SEC spec said $thousands, the post-2023
+spec says whole dollars, and real filings do both. Earlier versions of
+this package multiplied every value by 1000, which reported
+dollars-reporting filers 1000× high. Since v0.2 the parser detects the
+unit per document (median implied share price across common-stock
+rows; below $1/share ⇒ thousands ⇒ ×1000, above $1M/share ⇒
+over-scaled ⇒ ÷1000, otherwise dollars as-is). Documents with fewer
+than 5 common-stock rows are left in whole dollars. This mirrors the
+production Oxford Ledge correction that repaired ~1M mis-united rows
+in July 2026.
 
 ### Rate limiting (respect SEC's 10-qps cap)
 

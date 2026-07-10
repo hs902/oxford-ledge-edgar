@@ -23,7 +23,7 @@ from oxfordledge_edgar._http import EdgarFetcher, RateLimiter
 from oxfordledge_edgar.form4 import Form4Transaction, parse_form4
 from oxfordledge_edgar.thirteenf import Holding, parse_13f_infotable
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __all__ = [
     "EdgarFetcher",
     "Form4Transaction",
